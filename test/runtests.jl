@@ -311,6 +311,7 @@ const Ananab = -1
         show(io, "text/plain", invalid)
         str = String(take!(io))
         @test str == "Invalid.#invalid# = 1"
+        @test sprint(show, invalid) == "Invalid.#invalid#"
     end
 
 
