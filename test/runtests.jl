@@ -91,6 +91,13 @@ const Ananab = -1
         @test str == "EnumX.Enum{Int32}"
     end
 
+    # Two-arg `show` should always emit `Module.Name` (the `EnumX` convention)
+    # so that `repr(x)` round-trips. Without our override Base's fallback prints
+    # just the bare instance name under `:compact => true`, which is unparseable
+    # since `EnumX` instances live inside the auto-generated module.
+    @test sprint(show, Fruit.Apple;  context = :compact => true) == "Fruit.Apple"
+    @test sprint(show, Fruit.Banana; context = :compact => true) == "Fruit.Banana"
+
 
     # Base type specification
     @enumx Fruit8::Int8 Apple
